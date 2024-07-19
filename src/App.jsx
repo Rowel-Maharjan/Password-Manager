@@ -1,14 +1,18 @@
 import './App.css'
+import Navbar from './components/Navbar'
+import Manager from './components/Manager'
 
 function App() {
 
   return (
     <>
-      <div className='underline text-5xl text-red-500 cursor-pointer hover:text-6xl'>
-        MY UI
-      </div>
+      <Navbar />
+      <Manager />
+
     </>
   )
 }
 
 export default App
+
+//25min
