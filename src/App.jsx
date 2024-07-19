@@ -8,11 +8,13 @@ function App() {
     <>
       <Navbar />
       <Manager />
-
     </>
   )
 }
 
 export default App
 
-//25min
+
+//35min
+
+
