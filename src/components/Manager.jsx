@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { useRef } from 'react'
+
 
 const Manager = () => {
     const [eyeOpen, setEyeOpen] = useState(true)
 
     // const eyeref = useRef()
-    const showPassword = ()=>{
+    const showPassword = () => {
         // if(eyeref.current.src.includes("public/icons/eye.png"))
         //     eyeref.current.src = "public/icons/crosseye.png"
         // else
@@ -30,13 +30,12 @@ const Manager = () => {
                 <div className='container flex flex-col gap-4 mt-8 mx-auto '>
                     <input placeholder='Enter website URL' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1' type="text" name="" id="" />
                     <div className='container flex gap-3'>
-                        <input placeholder='Enter Username' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1' type="text" name="" id="" />
-                        <div className='relative flex items-center'>
-                            <input placeholder='Enter Password' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1' type="text" name="" id="" />
-                            <span className='cursor-pointer absolute right-2'  onClick={showPassword}>
-                                <img width={20} src={eyeOpen?"public/icons/eye.png":"public/icons/crosseye.png"} alt="eye" ref={eyeref}/>
+                        <input placeholder='Enter Username' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1 w-[80%]' type="text" name="" id="" />
+                        <div className='relative flex items-center rounded-full border border-green-500 focus:outline-green-500 px-3 py-1 bg-white'>
+                            <input placeholder='Enter Password' className='w-[87%] outline-none bg-transparent' type="text" name="" id="" />
+                            <span className='cursor-pointer absolute right-2' onClick={showPassword}>
+                                <img width={20} src={eyeOpen ? "public/icons/eye.png" : "public/icons/crosseye.png"} alt="eye" />
                             </span>
-
                         </div>
                     </div>
 
