@@ -1,6 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useRef } from 'react'
 
 const Manager = () => {
+    const [eyeOpen, setEyeOpen] = useState(true)
+
+    // const eyeref = useRef()
+    const showPassword = ()=>{
+        // if(eyeref.current.src.includes("public/icons/eye.png"))
+        //     eyeref.current.src = "public/icons/crosseye.png"
+        // else
+        //     eyeref.current.src = "public/icons/eye.png"
+        setEyeOpen(!eyeOpen)
+    }
+
     return (
         <>
             <div className="absolute top-0 z-[-2] h-screen w-screen bg-green-50 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
@@ -21,7 +33,9 @@ const Manager = () => {
                         <input placeholder='Enter Username' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1' type="text" name="" id="" />
                         <div className='relative flex items-center'>
                             <input placeholder='Enter Password' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1' type="text" name="" id="" />
-                            <span className='absolute right-2'>Show</span>
+                            <span className='cursor-pointer absolute right-2'  onClick={showPassword}>
+                                <img width={20} src={eyeOpen?"public/icons/eye.png":"public/icons/crosseye.png"} alt="eye" ref={eyeref}/>
+                            </span>
 
                         </div>
                     </div>
