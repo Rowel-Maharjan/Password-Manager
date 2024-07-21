@@ -1,16 +1,27 @@
 import React, { useState } from 'react'
+import { useRef } from 'react'
+
 
 
 const Manager = () => {
     const [eyeOpen, setEyeOpen] = useState(true)
+    const [togglePassword, setTogglePassword] = useState(true)
+    const [form, setform] = useState({})
 
-    // const eyeref = useRef()
+    const addPass = useRef()
+
+    const savePassword = ()=>{
+
+    }
+
+    const handleChange = (e)=>{
+        setform({...form, [e.target.name]:e.target.value})
+        console.log(form)
+    }
+
     const showPassword = () => {
-        // if(eyeref.current.src.includes("public/icons/eye.png"))
-        //     eyeref.current.src = "public/icons/crosseye.png"
-        // else
-        //     eyeref.current.src = "public/icons/eye.png"
         setEyeOpen(!eyeOpen)
+        setTogglePassword(!togglePassword)
     }
 
     return (
@@ -28,27 +39,31 @@ const Manager = () => {
                 </div>
 
                 <div className='container flex flex-col gap-4 mt-8 mx-auto '>
-                    <input placeholder='Enter website URL' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1' type="text" name="" id="" />
+                    <input name='site' value={form.site?form.site:""} onChange={handleChange} placeholder='Enter website URL' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1' type="text" />
+
                     <div className='container flex gap-3'>
-                        <input placeholder='Enter Username' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1 w-[80%]' type="text" name="" id="" />
+                        <input name='username' value={form.username?form.username:""} onChange={handleChange} placeholder='Enter Username' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1 w-[80%]' type="text" />
+
                         <div className='relative flex items-center rounded-full border border-green-500 focus:outline-green-500 px-3 py-1 bg-white'>
-                            <input placeholder='Enter Password' className='w-[87%] outline-none bg-transparent' type="text" name="" id="" />
+                            <input name='password' value={form.password?form.password:""} onChange={handleChange} placeholder='Enter Password' className='w-[87%] outline-none bg-transparent' type={togglePassword ? "password" : "text"} />
+
                             <span className='cursor-pointer absolute right-2' onClick={showPassword}>
-                                <img width={20} src={eyeOpen ? "public/icons/eye.png" : "public/icons/crosseye.png"} alt="eye" />
+                                <img width={20} src={eyeOpen ? "/icons/eye.png" : "/icons/crosseye.png"} alt="eye" />
                             </span>
                         </div>
                     </div>
 
-                    <button className='flex items-center justify-center border border-black bg-green-500 w-fit mx-auto rounded-full px-3 py-1 font-bold'>
+
+                    <button onClick={savePassword} onMouseDown={() => addPass.current.trigger = "in"} className='flex items-center justify-center border border-black bg-green-500 w-fit mx-auto rounded-full px-3 py-1 font-bold'>
                         <lord-icon
                             src="https://cdn.lordicon.com/jgnvfzqg.json"
-                            trigger="loop-on-hover"
-                            delay="10">
-
+                            delay="10"
+                            ref={addPass}>
                         </lord-icon>
                         Add Password
                     </button>
                 </div>
+
             </div >
         </>
     )
