@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRef } from 'react'
 import { useForm } from "react-hook-form"
 
@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form"
 const React_form_hook = () => {
     const [eyeOpen, setEyeOpen] = useState(true)
     const [togglePassword, setTogglePassword] = useState(true)
+    const [passwordArray, setPasswordArray] = useState([])
 
     const {
         register,
@@ -14,7 +15,20 @@ const React_form_hook = () => {
         formState: { errors },
     } = useForm()
 
-    const onSubmit = (data) => console.log(data)
+    useEffect(() => {
+        let values = localStorage.getItem("passwords")
+        if(values){
+            setPasswordArray(JSON.parse(values))
+        }
+        
+    }, [])
+    
+    const onSubmit = (data) =>{
+        setPasswordArray([...passwordArray,data])
+        localStorage.setItem("passwords",JSON.stringify([...passwordArray,data]));
+        console.log([...passwordArray,data])
+    } 
+        
 
     const addPass = useRef()
 
