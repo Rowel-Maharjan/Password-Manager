@@ -1,8 +1,12 @@
 import React from 'react'
 
 const Table = ({ passwordArray }) => {
+    const copyText = (text) => {
+        navigator.clipboard.writeText(text);
+    }
+
     return (
-        <div className='mx-auto w-3/4 mt-4'>
+        <div className='mx-auto w-3/4 mt-4 mb-20'>
             <div>
                 <h2 className='text-2xl font-bold py-2'>Your Passwords</h2>
                 {passwordArray.length === 0 && <div>No password to show.</div>}
@@ -17,10 +21,49 @@ const Table = ({ passwordArray }) => {
                     <tbody className='bg-green-100'>
                         {passwordArray.map(((item, index) => {
                             return (<tr key={index}>
-                                    <td className='py-2 border border-white pl-2'><a href={item.site} target='__blank' className='text-blue-800 underline'> {item.site}</a></td>
-                                    <td className='py-2 border border-white pl-2'>{item.username}</td>
-                                    <td className='py-2 border border-white pl-2'>{item.password}</td>
-                                </tr>)
+                                <td className='py-2 border border-white pl-2'>
+                                    <div className='flex justify-between'>
+                                        <div>
+                                            <a href={item.site} target='__blank' className='text-blue-800 underline'>{item.site}</a>
+                                        </div>
+                                        <div className='cursor-pointer pr-1' onClick={() => { copyText(item.site) }}>
+                                            <lord-icon
+                                                src="https://cdn.lordicon.com/depeqmsz.json"
+                                                trigger="hover"
+                                                style={{ "width": "20px", "height": "20px" }}>
+                                            </lord-icon>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td className='py-2 border border-white pl-2'>
+                                    <div className='flex justify-between'>
+                                        <div>
+                                            {item.username}
+                                        </div>
+                                        <div className='cursor-pointer pr-1' onClick={() => { copyText(item.username) }}>
+                                            <lord-icon
+                                                src="https://cdn.lordicon.com/depeqmsz.json"
+                                                trigger="hover"
+                                                style={{ "width": "20px", "height": "20px" }}>
+                                            </lord-icon>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td className='py-2 border border-white pl-2'>
+                                    <div className='flex justify-between'>
+                                        <div>
+                                            {item.password}
+                                        </div>
+                                        <div className='cursor-pointer pr-1' onClick={() => { copyText(item.password) }}>
+                                            <lord-icon
+                                                src="https://cdn.lordicon.com/depeqmsz.json"
+                                                trigger="hover"
+                                                style={{ "width": "20px", "height": "20px" }}>
+                                            </lord-icon>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>)
                         }))}
                     </tbody>
                 </table>}
