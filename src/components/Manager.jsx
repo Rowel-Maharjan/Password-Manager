@@ -8,7 +8,7 @@ const Manager = () => {
 
     useEffect(() => {
         let passwords = localStorage.getItem("passwords");
-        if(passwords){
+        if (passwords) {
             setPasswordArray(JSON.parse(passwords))
         }
     }, [])
@@ -16,9 +16,9 @@ const Manager = () => {
     const addPass = useRef()
 
     const savePassword = () => {
-        setPasswordArray([...passwordArray,form])
-        localStorage.setItem("passwords",JSON.stringify([...passwordArray,form]))
-        console.log([...passwordArray,form])
+        setPasswordArray([...passwordArray, form])
+        localStorage.setItem("passwords", JSON.stringify([...passwordArray, form]))
+        console.log([...passwordArray, form])
     }
 
     const handleChange = (e) => {
@@ -68,6 +68,37 @@ const Manager = () => {
                         </lord-icon>
                         Add Password
                     </button>
+                </div>
+
+
+                <div>
+                    <h2>Your Passowrds</h2>
+                    <table className="table-auto w-full text-left">
+                        <thead className='text-white bg-green-700'>
+                            <tr>
+                                <th>Song</th>
+                                <th>Artist</th>
+                                <th>Year</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>The Sliding Mr. Bones (Next Stop, Pottersville)</td>
+                                <td>Malcolm Lockyer</td>
+                                <td>1961</td>
+                            </tr>
+                            <tr>
+                                <td>Witchy Woman</td>
+                                <td>The Eagles</td>
+                                <td>1972</td>
+                            </tr>
+                            <tr>
+                                <td>Shining Star</td>
+                                <td>Earth, Wind, and Fire</td>
+                                <td>1975</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div >
         </>

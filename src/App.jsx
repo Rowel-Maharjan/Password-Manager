@@ -10,7 +10,6 @@ function App() {
       <Navbar />
       <Manager />
       {/* <React_form_hook /> */}
-
     </>
   )
 }
