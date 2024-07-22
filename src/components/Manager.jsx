@@ -51,7 +51,7 @@ const Manager = () => {
                     <div className='container flex gap-3'>
                         <input name='username' value={form.username ? form.username : ""} onChange={handleChange} placeholder='Enter Username' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1 w-[80%]' type="text" />
 
-                        <div className='relative flex items-center rounded-full border border-green-500 focus:outline-green-500 px-3 py-1 bg-white'>
+                        <div className='relative flex items-center rounded-full border border-green-500 px-3 py-1 bg-white'>
                             <input name='password' value={form.password ? form.password : ""} onChange={handleChange} placeholder='Enter Password' className='w-[87%] outline-none bg-transparent' type={togglePassword ? "password" : "text"} />
 
                             <span className='cursor-pointer absolute right-2' onClick={showPassword}>

@@ -16,8 +16,7 @@ const Table = ({ passwordArray }) => {
                     </thead>
                     <tbody className='bg-green-100'>
                         {passwordArray.map(((item, index) => {
-                            return (
-                                <tr key={index}>
+                            return (<tr key={index}>
                                     <td className='py-2 border border-white pl-2'><a href={item.site} target='__blank' className='text-blue-800 underline'> {item.site}</a></td>
                                     <td className='py-2 border border-white pl-2'>{item.username}</td>
                                     <td className='py-2 border border-white pl-2'>{item.password}</td>
