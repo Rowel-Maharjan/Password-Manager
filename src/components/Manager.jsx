@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
+import Table from './Table'
 
 const Manager = () => {
     const [eyeOpen, setEyeOpen] = useState(true)
@@ -32,7 +33,7 @@ const Manager = () => {
 
     return (
         <>
-            <div className="absolute top-0 z-[-2] h-screen w-screen bg-green-50 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
+            <div className="absolute top-0 z-[-2] h-screen w-full bg-green-50 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
 
             <div className='mx-auto w-3/4 mt-4'>
                 <div className='flex flex-col items-center'>
@@ -69,38 +70,8 @@ const Manager = () => {
                         Add Password
                     </button>
                 </div>
-
-
-                <div>
-                    <h2>Your Passowrds</h2>
-                    <table className="table-auto w-full text-left">
-                        <thead className='text-white bg-green-700'>
-                            <tr>
-                                <th>Song</th>
-                                <th>Artist</th>
-                                <th>Year</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-                                <td>Malcolm Lockyer</td>
-                                <td>1961</td>
-                            </tr>
-                            <tr>
-                                <td>Witchy Woman</td>
-                                <td>The Eagles</td>
-                                <td>1972</td>
-                            </tr>
-                            <tr>
-                                <td>Shining Star</td>
-                                <td>Earth, Wind, and Fire</td>
-                                <td>1975</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div >
+            <Table passwordArray={passwordArray}/>
         </>
     )
 }

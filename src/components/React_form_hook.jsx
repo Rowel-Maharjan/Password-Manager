@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRef } from 'react'
 import { useForm } from "react-hook-form"
+import Table from './Table'
 
 
 const React_form_hook = () => {
@@ -27,8 +28,6 @@ const React_form_hook = () => {
         localStorage.setItem("passwords",JSON.stringify([...passwordArray,data]));
         console.log([...passwordArray,data])
     } 
-        
-
     const addPass = useRef()
 
     const showPassword = () => {
@@ -78,6 +77,7 @@ const React_form_hook = () => {
                     </div>
                 </form>
             </div >
+            <Table passwordArray={passwordArray}/>
         </>
     )
 }
