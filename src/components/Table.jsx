@@ -1,13 +1,13 @@
 import React from 'react'
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 const Table = ({ passwordArray, setPasswordArray, setform, focus }) => {
     const copyText = (text) => {
         toast.success('Copied to Clipboard', {
             position: "top-right",
             autoClose: 3000,
-            hideProgressBar: true,
+            hideProgressBar: true,      
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
@@ -50,6 +50,16 @@ const Table = ({ passwordArray, setPasswordArray, setform, focus }) => {
             setPasswordArray(newPasswordArray)
             localStorage.setItem("passwords", JSON.stringify(newPasswordArray))
         }
+        toast.success('Delete Successful', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: true,      
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
     }
     const editText = (text) => {
         setform(text)
@@ -63,20 +73,6 @@ const Table = ({ passwordArray, setPasswordArray, setform, focus }) => {
 
     return (
         <>
-            <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-            />
-            {/* Same as */}
-            <ToastContainer />
             <div className='mx-auto w-3/4 mt-4 mb-20'>
                 <div>
                     <h2 className='text-2xl font-bold py-2'>Your Passwords</h2>
