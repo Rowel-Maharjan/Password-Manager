@@ -71,7 +71,7 @@ const Manager = () => {
                     </button>
                 </div>
             </div >
-            <Table passwordArray={passwordArray}/>
+            <Table passwordArray={passwordArray} />
         </>
     )
 }
