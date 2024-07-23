@@ -2,12 +2,12 @@ import React from 'react'
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 
-const Table = ({ passwordArray, setPasswordArray, setform, focus }) => {
+const Table = ({ passwordArray, setPasswordArray, setform, focuses }) => {
     const copyText = (text) => {
         toast.success('Copied to Clipboard', {
             position: "top-right",
             autoClose: 3000,
-            hideProgressBar: true,      
+            hideProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
@@ -53,7 +53,7 @@ const Table = ({ passwordArray, setPasswordArray, setform, focus }) => {
         toast.success('Delete Successful', {
             position: "top-right",
             autoClose: 3000,
-            hideProgressBar: true,      
+            hideProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
@@ -67,8 +67,8 @@ const Table = ({ passwordArray, setPasswordArray, setform, focus }) => {
             return item.id !== text.id
         })
         setPasswordArray(newPasswordArray)
-        focus.current.focus()
-
+        if(focuses)
+            focuses.current.focus()
     }
 
     return (

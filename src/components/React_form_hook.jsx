@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useRef } from 'react'
 import { useForm } from "react-hook-form"
 import Table from './Table'
-
+import { v4 as uuidv4 } from 'uuid';
+import { toast } from 'react-toastify';
 
 const React_form_hook = () => {
     const [eyeOpen, setEyeOpen] = useState(true)
@@ -13,6 +14,7 @@ const React_form_hook = () => {
         register,
         handleSubmit,
         watch,
+        reset, // This is used to reset the value
         formState: { errors },
     } = useForm()
 
@@ -24,9 +26,21 @@ const React_form_hook = () => {
     }, [])
     
     const onSubmit = (data) =>{
-        setPasswordArray([...passwordArray,data])
-        localStorage.setItem("passwords",JSON.stringify([...passwordArray,data]));
-        console.log([...passwordArray,data])
+        setPasswordArray([...passwordArray,{...data, id: uuidv4()}])
+        localStorage.setItem("passwords",JSON.stringify([...passwordArray,{...data, id: uuidv4()}]));
+        reset({site: "", username: "", password: ""}); //Reset the value from the form
+        if(data){
+            toast.success('Password Saved', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: true,      
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        }
     } 
     const addPass = useRef()
 
@@ -54,7 +68,7 @@ const React_form_hook = () => {
                         <input {...register("site", { required: true })} placeholder='Enter website URL' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1' type="text" />
 
                         <div className='container flex gap-3'>
-                            <input {...register("username", { required: true })} placeholder='Enter Username' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1 w-[80%]' type="text" />
+                            <input {...register("username", { required: true })} placeholder='Enter Username' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1 w-[80%]' type="text"/>
 
                             <div className='relative flex items-center rounded-full border border-green-500 focus:outline-green-500 px-3 py-1 bg-white'>
                                 <input {...register("password", { required: true })} placeholder='Enter Password' className='w-[87%] outline-none bg-transparent' type={togglePassword ? "password" : "text"} />
@@ -72,12 +86,12 @@ const React_form_hook = () => {
                                 delay="10"
                                 ref={addPass}>
                             </lord-icon>
-                            Save
+                            Add Password
                         </button>
                     </div>
                 </form>
             </div >
-            <Table passwordArray={passwordArray} setPasswordArray={setPasswordArray}/>
+            <Table passwordArray={passwordArray} setPasswordArray={setPasswordArray} setform={reset}/>
         </>
     )
 }
