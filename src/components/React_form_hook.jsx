@@ -72,12 +72,12 @@ const React_form_hook = () => {
                                 delay="10"
                                 ref={addPass}>
                             </lord-icon>
-                            Add Password
+                            Save
                         </button>
                     </div>
                 </form>
             </div >
-            <Table passwordArray={passwordArray}/>
+            <Table passwordArray={passwordArray} setPasswordArray={setPasswordArray}/>
         </>
     )
 }

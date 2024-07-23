@@ -2,11 +2,11 @@ import React from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Table = ({ passwordArray }) => {
+const Table = ({ passwordArray, setPasswordArray, setform, focus }) => {
     const copyText = (text) => {
         toast.success('Copied to Clipboard', {
             position: "top-right",
-            autoClose: 5000,
+            autoClose: 3000,
             hideProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
@@ -15,6 +15,50 @@ const Table = ({ passwordArray }) => {
             theme: "light",
         });
         navigator.clipboard.writeText(text);
+    }
+
+
+    // ----------------------Can Be Done In case of No UUIDV4 attached in form------------------------
+
+    // const deleteText = (text, passIndex) => {
+    //     let newPasswordArray = passwordArray.filter((item, index) => {
+    //         return index !== passIndex
+    //     })
+    //     setPasswordArray(newPasswordArray)
+    //     localStorage.setItem("passwords", JSON.stringify(newPasswordArray))
+
+    // }
+
+    // const editText = (text, passIndex) => {
+    //     setform(text)
+    //     let newPasswordArray = passwordArray.filter((item, index) => {
+    //         return index !== passIndex
+    //     })
+    //     setPasswordArray(newPasswordArray)
+    //     localStorage.setItem("passwords", JSON.stringify(newPasswordArray))
+    // }
+
+
+
+    // ----------------------Using UUIDV4------------------------
+    const deleteText = (text) => {
+        let c = confirm("Do you really want to delete this password?")
+        if (c) {
+            let newPasswordArray = passwordArray.filter((item) => {
+                return item.id !== text.id
+            })
+            setPasswordArray(newPasswordArray)
+            localStorage.setItem("passwords", JSON.stringify(newPasswordArray))
+        }
+    }
+    const editText = (text) => {
+        setform(text)
+        let newPasswordArray = passwordArray.filter((item) => {
+            return item.id !== text.id
+        })
+        setPasswordArray(newPasswordArray)
+        focus.current.focus()
+
     }
 
     return (
@@ -43,6 +87,7 @@ const Table = ({ passwordArray }) => {
                                 <th className='py-2 border border-white pl-2'>Site</th>
                                 <th className='py-2 border border-white pl-2'>Username</th>
                                 <th className='py-2 border border-white pl-2'>Password</th>
+                                <th className='py-2 border border-white pl-2'>Actions</th>
                             </tr>
                         </thead>
                         <tbody className='bg-green-100'>
@@ -55,7 +100,7 @@ const Table = ({ passwordArray }) => {
                                             </div>
                                             <div className='cursor-pointer pr-1' onClick={() => { copyText(item.site) }}>
                                                 <lord-icon
-                                                    src="https://cdn.lordicon.com/depeqmsz.json"
+                                                    src="https://cdn.lordicon.com/iykgtsbt.json"
                                                     trigger="hover"
                                                     style={{ "width": "20px", "height": "20px" }}>
                                                 </lord-icon>
@@ -69,7 +114,7 @@ const Table = ({ passwordArray }) => {
                                             </div>
                                             <div className='cursor-pointer pr-1' onClick={() => { copyText(item.username) }}>
                                                 <lord-icon
-                                                    src="https://cdn.lordicon.com/depeqmsz.json"
+                                                    src="https://cdn.lordicon.com/iykgtsbt.json"
                                                     trigger="hover"
                                                     style={{ "width": "20px", "height": "20px" }}>
                                                 </lord-icon>
@@ -83,11 +128,25 @@ const Table = ({ passwordArray }) => {
                                             </div>
                                             <div className='cursor-pointer pr-1' onClick={() => { copyText(item.password) }}>
                                                 <lord-icon
-                                                    src="https://cdn.lordicon.com/depeqmsz.json"
+                                                    src="https://cdn.lordicon.com/iykgtsbt.json"
                                                     trigger="hover"
                                                     style={{ "width": "20px", "height": "20px" }}>
                                                 </lord-icon>
                                             </div>
+                                        </div>
+                                    </td>
+                                    <td className='py-2 border border-white pl-2'>
+                                        <div className='flex justify-left gap-2'>
+                                            <div className='cursor-pointer' onClick={() => { editText(item) }}><lord-icon
+                                                src="https://cdn.lordicon.com/gwlusjdu.json"
+                                                trigger="hover"
+                                                style={{ "width": "20px", "height": "20px" }}>
+                                            </lord-icon></div>
+                                            <div className='cursor-pointer' onClick={() => deleteText(item)}><lord-icon
+                                                src="https://cdn.lordicon.com/skkahier.json"
+                                                trigger="hover"
+                                                style={{ "width": "20px", "height": "20px" }}>
+                                            </lord-icon></div>
                                         </div>
                                     </td>
                                 </tr>)
