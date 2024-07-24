@@ -51,8 +51,6 @@ const React_form_hook = () => {
 
     return (
         <>
-            <div className="absolute top-0 z-[-2] h-screen w-full bg-green-50 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
-
             <div className='mx-auto w-3/4 mt-4'>
                 <div className='flex flex-col items-center'>
                     <div className='font-bold text-3xl'>
@@ -67,8 +65,11 @@ const React_form_hook = () => {
                     <div className='container flex flex-col gap-4 mt-8 mx-auto '>
                         <input {...register("site", { required: true })} placeholder='Enter website URL' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1' type="text" />
 
-                        <div className='container flex gap-3'>
-                            <input {...register("username", { required: true })} placeholder='Enter Username' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1 w-[80%]' type="text"/>
+                        <div className='container flex flex-col md:flex-row gap-4'>
+                            <div className='w-full'>
+                            <input {...register("username", { required: true })} placeholder='Enter Username' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1 w-full' type="text"/>
+
+                            </div>
 
                             <div className='relative flex items-center rounded-full border border-green-500 focus:outline-green-500 px-3 py-1 bg-white'>
                                 <input {...register("password", { required: true })} placeholder='Enter Password' className='w-[87%] outline-none bg-transparent' type={togglePassword ? "text" : "password"} />

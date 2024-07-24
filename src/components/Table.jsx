@@ -57,17 +57,17 @@ const Table = ({ passwordArray, setPasswordArray, setform, focuses }) => {
             })
             setPasswordArray(newPasswordArray)
             localStorage.setItem("passwords", JSON.stringify(newPasswordArray))
+            toast.success('Password Deleted!', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
         }
-        toast.success('Delete Successful', {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
     }
     const editText = (text) => {
         setform(text)
@@ -81,7 +81,7 @@ const Table = ({ passwordArray, setPasswordArray, setform, focuses }) => {
 
     return (
         <>
-            <div className='mx-auto w-3/4 mt-4 mb-20'>
+            <div className='mx-auto w-3/4 mt-4'>
                 <div>
                     <div className='flex items-center gap-3 py-2'>
                         <h2 className='text-2xl font-bold'>Your Passwords</h2>
@@ -90,7 +90,7 @@ const Table = ({ passwordArray, setPasswordArray, setform, focuses }) => {
                         </div>
                     </div>
                     {passwordArray.length === 0 && <div>No password to show.</div>}
-                    {passwordArray.length !== 0 && <table className="table-fixed w-full text-left rounded-md overflow-hidden">
+                    {passwordArray.length !== 0 && <table className="table-auto w-full text-left rounded-md overflow-hidden">
                         <thead className='text-white bg-green-700'>
                             <tr>
                                 <th className='py-2 border border-white pl-2'>Site</th>
@@ -119,7 +119,7 @@ const Table = ({ passwordArray, setPasswordArray, setform, focuses }) => {
                                     <td className='py-2 border border-white pl-2'>
                                         <div className='flex justify-between'>
                                             <div>
-                                                {item.username}
+                                            {togglePassword? item.username:"XXXXX"}
                                             </div>
                                             <div className='cursor-pointer pr-1' onClick={() => { copyText(item.username) }}>
                                                 <lord-icon

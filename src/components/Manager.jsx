@@ -20,19 +20,33 @@ const Manager = () => {
     const focuses = useRef()
 
     const savePassword = () => {
-        setPasswordArray([...passwordArray, {...form, id: uuidv4()}])
-        localStorage.setItem("passwords", JSON.stringify([...passwordArray, {...form, id: uuidv4()}]))
-        setform({})
-        toast.success('Password Saved', {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: true,      
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
+        if (form.site && form.username && form.password && form.site.length > 2 && form.username.length > 2 && form.password.length > 2) {
+            setPasswordArray([...passwordArray, { ...form, id: uuidv4() }])
+            localStorage.setItem("passwords", JSON.stringify([...passwordArray, { ...form, id: uuidv4() }]))
+            setform({})
+            toast.success('Password Saved', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        }
+        else {
+            toast.error('Password Not Saved', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        }
     }
 
     const handleChange = (e) => {
@@ -46,8 +60,6 @@ const Manager = () => {
 
     return (
         <>
-            <div className="absolute top-0 z-[-2] h-screen w-full bg-green-50 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
-
             <div className='mx-auto w-3/4 mt-4'>
                 <div className='flex flex-col items-center'>
                     <div className='font-bold text-3xl'>
@@ -59,13 +71,15 @@ const Manager = () => {
                 </div>
 
                 <div className='container flex flex-col gap-4 mt-8 mx-auto '>
-                    <input name='site' value={form.site ? form.site : ""} onChange={handleChange} placeholder='Enter website URL' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1' type="text"/>
-                    
-                    <div className='container flex gap-3'>
-                        <input ref={focuses} name='username' value={form.username ? form.username : ""} onChange={handleChange} placeholder='Enter Username' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1 w-[80%]' type="text"/>
+                    <input name='site' value={form.site ? form.site : ""} onChange={handleChange} placeholder='Enter website URL' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1' type="text" />
+
+                    <div className='container flex flex-col md:flex-row gap-4'>
+                        <div className='w-full'>
+                            <input ref={focuses} name='username' value={form.username ? form.username : ""} onChange={handleChange} placeholder='Enter Username' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1 w-full' type="text" />
+                        </div>
 
                         <div className='relative flex items-center rounded-full border border-green-500 px-3 py-1 bg-white'>
-                            <input name='password' value={form.password ? form.password : ""} onChange={handleChange} placeholder='Enter Password' className='w-[87%] outline-none bg-transparent' type={togglePassword ? "text" : "password"}/>
+                            <input name='password' value={form.password ? form.password : ""} onChange={handleChange} placeholder='Enter Password' className='w-[87%] outline-none bg-transparent' type={togglePassword ? "text" : "password"} />
 
                             <span className='cursor-pointer absolute right-2' onClick={showPassword}>
                                 <img width={20} src={eyeOpen ? "/icons/eye.png" : "/icons/crosseye.png"} alt="eye" />
@@ -84,7 +98,7 @@ const Manager = () => {
                     </button>
                 </div>
             </div >
-            <Table passwordArray={passwordArray} setPasswordArray={setPasswordArray} setform={setform} focuses={focuses}/>
+            <Table passwordArray={passwordArray} setPasswordArray={setPasswordArray} setform={setform} focuses={focuses} />
         </>
     )
 }
