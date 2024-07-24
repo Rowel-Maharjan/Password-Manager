@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 
 const Table = ({ passwordArray, setPasswordArray, setform, focuses }) => {
+    const [eyeOpen, setEyeOpen] = useState(false)
+    const [togglePassword, setTogglePassword] = useState(false)
+
     const copyText = (text) => {
         toast.success('Copied to Clipboard', {
             position: "top-right",
@@ -15,6 +18,11 @@ const Table = ({ passwordArray, setPasswordArray, setform, focuses }) => {
             theme: "light",
         });
         navigator.clipboard.writeText(text);
+    }
+
+    const showPassword = () => {
+        setEyeOpen(!eyeOpen)
+        setTogglePassword(!togglePassword)
     }
 
 
@@ -67,7 +75,7 @@ const Table = ({ passwordArray, setPasswordArray, setform, focuses }) => {
             return item.id !== text.id
         })
         setPasswordArray(newPasswordArray)
-        if(focuses)
+        if (focuses)
             focuses.current.focus()
     }
 
@@ -75,7 +83,12 @@ const Table = ({ passwordArray, setPasswordArray, setform, focuses }) => {
         <>
             <div className='mx-auto w-3/4 mt-4 mb-20'>
                 <div>
-                    <h2 className='text-2xl font-bold py-2'>Your Passwords</h2>
+                    <div className='flex items-center gap-3 py-2'>
+                        <h2 className='text-2xl font-bold'>Your Passwords</h2>
+                        <div className='cursor-pointer' onClick={showPassword}>
+                            <img width={25} src={eyeOpen ? "/icons/eye.png" : "/icons/crosseye.png"} alt="eye" />
+                        </div>
+                    </div>
                     {passwordArray.length === 0 && <div>No password to show.</div>}
                     {passwordArray.length !== 0 && <table className="table-fixed w-full text-left rounded-md overflow-hidden">
                         <thead className='text-white bg-green-700'>
@@ -120,8 +133,9 @@ const Table = ({ passwordArray, setPasswordArray, setform, focuses }) => {
                                     <td className='py-2 border border-white pl-2'>
                                         <div className='flex justify-between'>
                                             <div>
-                                                {item.password}
+                                                {togglePassword? item.password:"XXXXX"}
                                             </div>
+
                                             <div className='cursor-pointer pr-1' onClick={() => { copyText(item.password) }}>
                                                 <lord-icon
                                                     src="https://cdn.lordicon.com/iykgtsbt.json"
@@ -129,6 +143,7 @@ const Table = ({ passwordArray, setPasswordArray, setform, focuses }) => {
                                                     style={{ "width": "20px", "height": "20px" }}>
                                                 </lord-icon>
                                             </div>
+
                                         </div>
                                     </td>
                                     <td className='py-2 border border-white pl-2'>

@@ -6,8 +6,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'react-toastify';
 
 const React_form_hook = () => {
-    const [eyeOpen, setEyeOpen] = useState(true)
-    const [togglePassword, setTogglePassword] = useState(true)
+    const [eyeOpen, setEyeOpen] = useState(false)
+    const [togglePassword, setTogglePassword] = useState(false)
     const [passwordArray, setPasswordArray] = useState([])
 
     const {
@@ -71,7 +71,7 @@ const React_form_hook = () => {
                             <input {...register("username", { required: true })} placeholder='Enter Username' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1 w-[80%]' type="text"/>
 
                             <div className='relative flex items-center rounded-full border border-green-500 focus:outline-green-500 px-3 py-1 bg-white'>
-                                <input {...register("password", { required: true })} placeholder='Enter Password' className='w-[87%] outline-none bg-transparent' type={togglePassword ? "password" : "text"} />
+                                <input {...register("password", { required: true })} placeholder='Enter Password' className='w-[87%] outline-none bg-transparent' type={togglePassword ? "text" : "password"} />
 
                                 <span className='cursor-pointer absolute right-2' onClick={showPassword}>
                                     <img width={20} src={eyeOpen ? "/icons/eye.png" : "/icons/crosseye.png"} alt="eye" />
