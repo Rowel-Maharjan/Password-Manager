@@ -30,24 +30,25 @@ const Manager = () => {
 
     const savePassword = async () => {
         if (form.site && form.username && form.password && form.site.length > 2 && form.username.length > 2 && form.password.length > 2) {
-            console.log(form._id)
-            const { site, username, password } = form
             if (form._id === undefined) {
-                await fetch("http://localhost:3000/", {
+                let res = await fetch("http://localhost:3000/", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ site, username, password })
+                    body: JSON.stringify(form)
                 })
+                let data = await res.json()
+                setPasswordArray([...passwordArray, data])
             }
             else {
+                const { site, username, password } = form
                 await fetch(`http://localhost:3000/${form._id}`, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ site, username, password })
                 })
+                setPasswordArray([...passwordArray, form])
             }
 
-            setPasswordArray([...passwordArray, form])
 
             // setPasswordArray([...passwordArray, { ...form, id: uuidv4() }])
             // localStorage.setItem("passwords", JSON.stringify([...passwordArray, { ...form, id: uuidv4() }]))

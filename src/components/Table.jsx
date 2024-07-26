@@ -52,15 +52,17 @@ const Table = ({passwordArray, setPasswordArray, setform, focuses }) => {
     const deleteText = async(text) => {
         let c = confirm("Do you really want to delete this password?")
         if (c) {
+            console.log(text._id)
+            let res = await fetch(`http://localhost:3000/${text._id}`, {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" }
+            })
             let newPasswordArray = passwordArray.filter((item) => {
                 return item._id !== text._id
             })
             setPasswordArray(newPasswordArray)
             // localStorage.setItem("passwords", JSON.stringify(newPasswordArray))
-            let res = await fetch(`http://localhost:3000/${text._id}`, {
-                method: "DELETE",
-                headers: { "Content-Type": "application/json" }
-            })
+     
             toast.success('Password Deleted!', {
                 position: "top-right",
                 autoClose: 3000,
@@ -74,6 +76,7 @@ const Table = ({passwordArray, setPasswordArray, setform, focuses }) => {
         }
     }
     const editText = async(text) => {
+        console.log(text)
         setform(text)
         let newPasswordArray = passwordArray.filter((item) => {
             return item._id !== text._id
