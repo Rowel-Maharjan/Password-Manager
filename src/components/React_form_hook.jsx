@@ -20,36 +20,34 @@ const React_form_hook = () => {
 
     useEffect(() => {
         let values = localStorage.getItem("passwords")
-        if(values){
+        if (values) {
             setPasswordArray(JSON.parse(values))
         }
     }, [])
-    
-    const onSubmit = (data) =>{
-        setPasswordArray([...passwordArray,{...data, id: uuidv4()}])
-        localStorage.setItem("passwords",JSON.stringify([...passwordArray,{...data, id: uuidv4()}]));
-        reset({site: "", username: "", password: ""}); //Reset the value from the form
-        if(data){
+
+    const onSubmit = (data) => {
+        if (data) {
             toast.success('Password Saved', {
                 position: "top-right",
                 autoClose: 3000,
-                hideProgressBar: true,      
+                hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
                 theme: "light",
             });
+            setPasswordArray([...passwordArray, { ...data, id: uuidv4() }])
+            localStorage.setItem("passwords", JSON.stringify([...passwordArray, { ...data, id: uuidv4() }]));
+            reset({ site: "", username: "", password: "" }); //Reset the value from the form
         }
-        
-    } 
+    }
     const addPass = useRef()
 
     const showPassword = () => {
         setEyeOpen(!eyeOpen)
         setTogglePassword(!togglePassword)
     }
-
     return (
         <>
             <div className='mx-auto w-3/4 mt-4'>
@@ -64,16 +62,16 @@ const React_form_hook = () => {
 
                 <form action="" onSubmit={handleSubmit(onSubmit)}>
                     <div className='container flex flex-col gap-4 mt-8 mx-auto '>
-                        <input {...register("site", { required: true })} placeholder='Enter website URL' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1' type="text" />
+                        <input {...register("site", { required: true, minLength: 3 })} placeholder='Enter website URL' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1' type="text" />
 
                         <div className='container flex flex-col md:flex-row gap-4'>
                             <div className='w-full'>
-                            <input {...register("username", { required: true })} placeholder='Enter Username' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1 w-full' type="text"/>
+                                <input {...register("username", { required: true, minLength: 3 })} placeholder='Enter Username' className='rounded-full border border-green-500 focus:outline-green-500 px-4 py-1 w-full' type="text" />
 
                             </div>
 
                             <div className='relative flex items-center rounded-full border border-green-500 focus:outline-green-500 px-3 py-1 bg-white'>
-                                <input {...register("password", { required: true })} placeholder='Enter Password' className='w-[87%] outline-none bg-transparent' type={togglePassword ? "text" : "password"} />
+                                <input {...register("password", { required: true, minLength: 3 })} placeholder='Enter Password' className='w-[87%] outline-none bg-transparent' type={togglePassword ? "text" : "password"} />
 
                                 <span className='cursor-pointer absolute right-2' onClick={showPassword}>
                                     <img width={20} src={eyeOpen ? "/icons/eye.png" : "/icons/crosseye.png"} alt="eye" />
@@ -93,7 +91,9 @@ const React_form_hook = () => {
                     </div>
                 </form>
             </div >
-            <Table passwordArray={passwordArray} setPasswordArray={setPasswordArray} setform={reset}/>
+
+            
+            <Table passwordArray={passwordArray} setPasswordArray={setPasswordArray} setform={reset} />
         </>
     )
 }
