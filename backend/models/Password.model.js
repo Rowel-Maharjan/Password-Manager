@@ -16,9 +16,8 @@ const PasswordSchema = new mongoose.Schema({
         minlength: [3, "password must be at least 3 characters long"],
         required: [true, "Enter password name"]
     }
-
 });
 
-const password = mongoose.model("employee", PasswordSchema);
+const password = mongoose.model("password", PasswordSchema);
 
 export default password

@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 app.use(urlencoded())
 
-mongoose.connect('mongodb://127.0.0.1:27017/check')
+mongoose.connect('mongodb://127.0.0.1:27017/passOP')
     .then(() => {
         console.log("connection success")
         app.listen(3000, () =>
