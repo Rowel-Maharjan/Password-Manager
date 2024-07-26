@@ -18,29 +18,58 @@ const React_form_hook = () => {
         formState: { errors },
     } = useForm()
 
+    const getPassword = async () => {
+        let req = await fetch("http://localhost:3000/");
+        let passwords = await req.json()
+        //-----------------------For Local Storage----------------------
+        // let passwords = localStorage.getItem("passwords"); 
+        // if (passwords) {
+        //     setPasswordArray(JSON.parse(passwords))
+        // }
+        setPasswordArray(passwords);
+    }
+
     useEffect(() => {
-        let values = localStorage.getItem("passwords")
-        if (values) {
-            setPasswordArray(JSON.parse(values))
-        }
+        getPassword()
+
     }, [])
 
-    const onSubmit = (data) => {
-        if (data) {
-            toast.success('Password Saved', {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
-            setPasswordArray([...passwordArray, { ...data, id: uuidv4() }])
-            localStorage.setItem("passwords", JSON.stringify([...passwordArray, { ...data, id: uuidv4() }]));
-            reset({ site: "", username: "", password: "" }); //Reset the value from the form
+    const onSubmit = async (data) => {
+        console.log(data)
+
+        if (data._id === undefined) {
+            let res = await fetch("http://localhost:3000/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            })
+            let datas = await res.json()
+            setPasswordArray([...passwordArray, datas])
         }
+        else {
+            const { site, username, password } = data
+            await fetch(`http://localhost:3000/${data._id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ site, username, password })
+            })
+            setPasswordArray([...passwordArray, data])
+        }
+        
+        // setPasswordArray([...passwordArray, { ...data, id: uuidv4() }]) 
+        // localStorage.setItem("passwords", JSON.stringify([...passwordArray, { ...data, id: uuidv4() }]));
+        
+        reset({ site: "", username: "", password: "" }); //Reset the value from the form
+        toast.success('Password Saved', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
     }
     const addPass = useRef()
 
@@ -92,7 +121,7 @@ const React_form_hook = () => {
                 </form>
             </div >
 
-            
+
             <Table passwordArray={passwordArray} setPasswordArray={setPasswordArray} setform={reset} />
         </>
     )
