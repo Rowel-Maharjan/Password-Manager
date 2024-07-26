@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import Table from './Table'
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';  //Only For Local Storage
 import { toast } from 'react-toastify';
 
 const Manager = () => {
@@ -9,20 +9,48 @@ const Manager = () => {
     const [form, setform] = useState({})
     const [passwordArray, setPasswordArray] = useState([])
 
+    const getPassword = async () => {
+        let req = await fetch("http://localhost:3000/");
+        let passwords = await req.json()
+
+        //-----------------------For Local Storage----------------------
+        // let passwords = localStorage.getItem("passwords"); 
+        // if (passwords) {
+        //     setPasswordArray(JSON.parse(passwords))
+        // }
+        setPasswordArray(passwords);
+    }
+
     useEffect(() => {
-        let passwords = localStorage.getItem("passwords");
-        if (passwords) {
-            setPasswordArray(JSON.parse(passwords))
-        }
+        getPassword()
     }, [])
 
     const addPass = useRef()
     const focuses = useRef()
 
-    const savePassword = () => {
+    const savePassword = async () => {
         if (form.site && form.username && form.password && form.site.length > 2 && form.username.length > 2 && form.password.length > 2) {
-            setPasswordArray([...passwordArray, { ...form, id: uuidv4() }])
-            localStorage.setItem("passwords", JSON.stringify([...passwordArray, { ...form, id: uuidv4() }]))
+            console.log(form._id)
+            const { site, username, password } = form
+            if (form._id === undefined) {
+                await fetch("http://localhost:3000/", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ site, username, password })
+                })
+            }
+            else {
+                await fetch(`http://localhost:3000/${form._id}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ site, username, password })
+                })
+            }
+
+            setPasswordArray([...passwordArray, form])
+
+            // setPasswordArray([...passwordArray, { ...form, id: uuidv4() }])
+            // localStorage.setItem("passwords", JSON.stringify([...passwordArray, { ...form, id: uuidv4() }]))
             setform({})
             toast.success('Password Saved', {
                 position: "top-right",
@@ -57,6 +85,7 @@ const Manager = () => {
         setEyeOpen(!eyeOpen)
         setTogglePassword(!togglePassword)
     }
+
 
     return (
         <>

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 
-const Table = ({ passwordArray, setPasswordArray, setform, focuses }) => {
+const Table = ({passwordArray, setPasswordArray, setform, focuses }) => {
     const [eyeOpen, setEyeOpen] = useState(false)
     const [togglePassword, setTogglePassword] = useState(false)
 
@@ -49,14 +49,18 @@ const Table = ({ passwordArray, setPasswordArray, setform, focuses }) => {
 
 
     // ----------------------Using UUIDV4------------------------
-    const deleteText = (text) => {
+    const deleteText = async(text) => {
         let c = confirm("Do you really want to delete this password?")
         if (c) {
             let newPasswordArray = passwordArray.filter((item) => {
-                return item.id !== text.id
+                return item._id !== text._id
             })
             setPasswordArray(newPasswordArray)
-            localStorage.setItem("passwords", JSON.stringify(newPasswordArray))
+            // localStorage.setItem("passwords", JSON.stringify(newPasswordArray))
+            let res = await fetch(`http://localhost:3000/${text._id}`, {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" }
+            })
             toast.success('Password Deleted!', {
                 position: "top-right",
                 autoClose: 3000,
@@ -69,10 +73,10 @@ const Table = ({ passwordArray, setPasswordArray, setform, focuses }) => {
             });
         }
     }
-    const editText = (text) => {
+    const editText = async(text) => {
         setform(text)
         let newPasswordArray = passwordArray.filter((item) => {
-            return item.id !== text.id
+            return item._id !== text._id
         })
         setPasswordArray(newPasswordArray)
         if (focuses)

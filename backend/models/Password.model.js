@@ -9,12 +9,12 @@ const PasswordSchema = new mongoose.Schema({
     username: {
         type: String,
         minlength: [3, "username must be at least 3 characters long"],
-        required: [true, "Enter username name"]
+        required: [true, "Enter username"]
     },
     password: {
         type: String,
         minlength: [3, "password must be at least 3 characters long"],
-        required: [true, "Enter password name"]
+        required: [true, "Enter password"]
     }
 });
 
