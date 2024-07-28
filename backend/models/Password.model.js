@@ -16,6 +16,8 @@ const PasswordSchema = new mongoose.Schema({
         minlength: [3, "password must be at least 3 characters long"],
         required: [true, "Enter password"]
     }
+}, {
+    timestamps: true
 });
 
 const password = mongoose.model("password", PasswordSchema);
