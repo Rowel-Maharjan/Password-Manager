@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
+import { baseURL } from '../url';
 
 const Table = ({passwordArray, setPasswordArray, setform, focuses }) => {
     const [eyeOpen, setEyeOpen] = useState(false)
@@ -52,7 +53,7 @@ const Table = ({passwordArray, setPasswordArray, setform, focuses }) => {
     const deleteText = async(text) => {
         let c = confirm("Do you really want to delete this password?")
         if (c) {
-            let res = await fetch(`http://localhost:3000/${text._id}`, {
+            let res = await fetch(`${baseURL}/${text._id}`, {
                 method: "DELETE",
                 headers: { "Content-Type": "application/json" }
             })

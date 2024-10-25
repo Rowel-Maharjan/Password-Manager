@@ -1,0 +1,1 @@
+export const baseURL = 'https://passwords-manager-backend.vercel.app' 

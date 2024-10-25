@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
 import Table from './Table'
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'react-toastify';
+import { baseURL } from '../url';
 
 const React_form_hook = () => {
     const [eyeOpen, setEyeOpen] = useState(false)
@@ -19,7 +20,7 @@ const React_form_hook = () => {
     } = useForm()
 
     const getPassword = async () => {
-        let req = await fetch("http://localhost:3000/");
+        let req = await fetch(`${baseURL}/`);
         let passwords = await req.json()
         //-----------------------For Local Storage----------------------
         // let passwords = localStorage.getItem("passwords"); 
@@ -38,7 +39,7 @@ const React_form_hook = () => {
         console.log(data)
 
         if (data._id === undefined) {
-            let res = await fetch("http://localhost:3000/", {
+            let res = await fetch(`${baseURL}/`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data)
@@ -48,7 +49,7 @@ const React_form_hook = () => {
         }
         else {
             const { site, username, password } = data
-            await fetch(`http://localhost:3000/${data._id}`, {
+            await fetch(`${baseURL}/${data._id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ site, username, password })

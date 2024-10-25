@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import Table from './Table'
 // import { v4 as uuidv4 } from 'uuid';  //Only For Local Storage
 import { toast } from 'react-toastify';
+import { baseURL } from '../url';
 
 const Manager = () => {
     const [eyeOpen, setEyeOpen] = useState(false)
@@ -10,7 +11,7 @@ const Manager = () => {
     const [passwordArray, setPasswordArray] = useState([])
 
     const getPassword = async () => {
-        let req = await fetch("http://localhost:3000/");
+        let req = await fetch(`${baseURL}`);
         let passwords = await req.json()
 
         //-----------------------For Local Storage----------------------
@@ -31,7 +32,7 @@ const Manager = () => {
     const savePassword = async () => {
         if (form.site && form.username && form.password && form.site.length > 2 && form.username.length > 2 && form.password.length > 2) {
             if (form._id === undefined) {
-                let res = await fetch("http://localhost:3000/", {
+                let res = await fetch(`${baseURL}`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(form)
@@ -41,7 +42,7 @@ const Manager = () => {
             }
             else {
                 const { site, username, password } = form
-                await fetch(`http://localhost:3000/${form._id}`, {
+                await fetch(`${baseURL}/${form._id}`, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ site, username, password })
