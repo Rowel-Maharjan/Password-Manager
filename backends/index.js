@@ -7,6 +7,7 @@ import 'dotenv/config'
 import cors from 'cors'
 
 const app = express();
+const port = 3000
 
 app.use(cors())
 app.use(express.json());
@@ -15,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 mongoose.connect(process.env.MONGO_URL)
     .then(() => {
         console.log("connection success")
-        app.listen(3000, () =>
+        app.listen(port, () =>
             console.log('Example app listening on port 3000!'),
         );
     })
